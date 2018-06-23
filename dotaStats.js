@@ -3,9 +3,6 @@ const args = require('minimist')(process.argv.slice(2));
 const fetch = require('node-fetch');
 const testing = false;
 
-function getPlayedWithInfo(cmdArgs) {
-
-}
 
 async function getResultsFromRequest(args) {
     let result = {};
@@ -35,7 +32,7 @@ async function getResultsFromRequest(args) {
     console.log('Win Loss Ratio:', winLossRatio);
 
     console.log(matchData.slice(0, 20));
-    
+
     return matchData;
 }
 
@@ -66,8 +63,8 @@ function buildOptions(cmdLineArgs) {
 
 function renderOptionsString(optionsObj, desiredKeys) {
     let options = desiredKeys.map(function(key) {
-        if(key === 'included_account_id') { 
-            return renderIncludedPlayersOption(optionsObj[key]); 
+        if(key === 'included_account_id') {
+            return renderIncludedPlayersOption(optionsObj[key]);
         }
         return key + '=' + optionsObj[key];
     });
@@ -99,7 +96,7 @@ function assertArraysEqual(actual, expected, testName) {
     if(areEqaulArrays(actual, expected)) {
         console.log('Passed [' + testName + ']');
     } else {
-        console.log('Failed [' + testName + '] Expected [' + expected + 
+        console.log('Failed [' + testName + '] Expected [' + expected +
                     '] but got [' + actual + ']');
     }
 }
@@ -119,7 +116,7 @@ function assertEqual(actual, expected, testName) {
     if(actual === expected) {
         console.log('Passed [' + testName + ']');
     } else {
-        console.log('Failed [' + testName + '] Expected "' + expected + '" but got "' 
+        console.log('Failed [' + testName + '] Expected "' + expected + '" but got "'
         + actual + '"');
     }
 }
@@ -149,15 +146,8 @@ if(testing) {
     let expectedString = 'included_account_id[]=1234&included_account_id[]=5678&limit=15&win=0&b=no';
     assertEqual(optionsString, expectedString, 'should render an options string with only the desired keys');
 
-    let compareData = getPlayedWithInfo(77133004, 42548365, 100);
-    let actualKeys = Object.keys(compareData);
-    let expectedKeys = ['wins', 'losses', 'winRate', 'matchesFound'];
-    assertEqual(compareData.length, 100, 'should return an array of length 100');
-    assertArraysEqual(actualKeys, expectedKeys, 'should return an object with keys:' +
-                                                'wins, losses, winRate, matchesFound');
-
 } else {
-    
+
     console.log(Promise.resolve(getResultsFromRequest(args)));
 
 }
